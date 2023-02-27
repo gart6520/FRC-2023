@@ -25,7 +25,7 @@ public class Robot extends TimedRobot {
   private Drivebase m_Drivebase;
   private Counter m_lidar;
   // Commands
-  private DriveJoystick m_DriveJoystick = new DriveJoystick();
+  private DriveJoystick m_DriveJoystick = new DriveJoystick(m_Drivebase,GYRO);
 
   /**
    * This function is run when the robot is first started up and should be used for any
