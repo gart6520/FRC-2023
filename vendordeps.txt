@@ -1,0 +1,5 @@
+Vendordeps links:
+
+https://maven.ctr-electronics.com/release/com/ctre/phoenix/Phoenix5-frc2023-latest.json
+https://www.kauailabs.com/dist/frc/2022/navx_frc.json
+https://maven.photonvision.org/repository/internal/org/photonvision/PhotonLib-json/1.0/PhotonLib-json-1.0.json
