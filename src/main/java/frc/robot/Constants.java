@@ -183,7 +183,7 @@ public final class Constants {
    * Subsystem instances
    * It's surely stupid to do this, but Roborio doesn't have that much RAM, so we need to
    * reduce the memory usage by creating only one instance of a subsystem. Also we want
-   * unification of subsystem instances :)  
+   * unification of subsystem instances :) (It also make conflict harder to happen)
    * 
    * Idea credit: KhiemGOM :)
    */
