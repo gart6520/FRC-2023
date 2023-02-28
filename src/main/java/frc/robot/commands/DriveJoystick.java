@@ -10,9 +10,6 @@ import frc.robot.subsystems.Drivebase;
 import frc.robot.subsystems.NavX;
 
 import static frc.robot.Constants.Controller.*;
-import static frc.robot.Constants.*;
-import static frc.robot.Constants.Function.*;
-import static frc.robot.Constants.SingleInstance.*;
 
 public class DriveJoystick extends CommandBase {
   private Drivebase m_Drivebase;
@@ -43,7 +40,7 @@ public class DriveJoystick extends CommandBase {
     SmartDashboard.putNumber("ySpeed", ySpeed * ySpeed);
     //Detect if the left joystick is being used to determine whether to set PID goal
     //m_subsystem.drive(xSpeed , ySpeed, 0);
-    m_Drivebase.driveWithField(ySpeed * 0.8,xSpeed* 0.8, rSpeed*0.8,m_gyro.getRotation2d().unaryMinus()); //X and Y is swapped in Controller vs Robot axis
+    m_Drivebase.driveWithField(ySpeed * 0.8, xSpeed * 0.8, rSpeed * 0.8, m_gyro.getRotation2d().unaryMinus()); //X and Y is swapped in Controller vs Robot axis
   }
 
   // Called once the command ends or is interrupted.

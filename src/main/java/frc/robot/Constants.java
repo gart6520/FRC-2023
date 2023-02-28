@@ -65,8 +65,16 @@ public final class Constants {
     public static final int RIGHT_FRONT = 3;
     /** Right Back Motor */
     public static final int RIGHT_BACK = 4;
+    /** Extender Motor */
     public static final int EXTEND = 6;
+    /** Turret motor */
     public static final int TURRET = 5;
+  }
+
+  /** Analog port */
+  public static class AnalogID {
+    /** MA3 absolute encoder */
+    public static final int ABSOLUTE_ENCODER = 0;
   }
 
   /** Kinematics Meters */
@@ -178,44 +186,26 @@ public final class Constants {
      */
     public static final Transform3d TAG_TO_GOAL = new Transform3d(new Translation3d(-1, 0.0, -0.6), new Rotation3d(0, 0, 180));
   }
-
-  /**
-   * Subsystem instances
-   * It's surely stupid to do this, but Roborio doesn't have that much RAM, so we need to
-   * reduce the memory usage by creating only one instance of a subsystem. Also we want
-   * unification of subsystem instances :)  
-   * 
-   * Idea credit: KhiemGOM :)
-   */
-
   
   public final static class Function{
-    /**Return whether the value is bigger than noise value (sensitivity) **/
+    /** Return whether the value is bigger than noise value (sensitivity) */
     public static boolean notNoise (double val)
     {
-      return Math.abs(val) > 0.05;
+      return Math.abs(val) > Sensitivity.JOYSTICK_SENSE;
     }
-    
+
+    /** Return 1 if value > 0 and -1 if value < 0. Else return 0 */
     public static double signof(double val)
     {
-        if (val>0)
-        {
-          return 1;
-        }
-        if (val<0)
-        {
-          return -1;
-        }
-        return 0;
+      if (val > 0) return 1;
+      if (val < 0) return -1;
+      return 0;
     }
+
+    /** Return square of value with sign added */
     public static double signedSqr(double val)
     {
       return signof(val) * val * val;
     }
-  }
-  public final static class SingleInstance
-  {
-    public static NavX GYRO = new NavX();
-    public static Drivebase DRIVER_BASE = new Drivebase();
   }
 }

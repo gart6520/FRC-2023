@@ -4,29 +4,15 @@
 
 package frc.robot.subsystems;
 
-import com.ctre.phoenix.motorcontrol.FeedbackDevice;
 import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
-
-import edu.wpi.first.math.controller.PIDController;
-import edu.wpi.first.math.geometry.Pose2d;
 import edu.wpi.first.math.geometry.Rotation2d;
-import edu.wpi.first.math.kinematics.MecanumDriveKinematics;
-import edu.wpi.first.math.kinematics.MecanumDriveOdometry;
-import edu.wpi.first.math.kinematics.MecanumDriveWheelPositions;
-import edu.wpi.first.math.kinematics.MecanumDriveWheelSpeeds;
 import edu.wpi.first.wpilibj.drive.MecanumDrive;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import edu.wpi.first.wpilibj2.command.SequentialCommandGroup;
-import edu.wpi.first.wpilibj2.command.InstantCommand;
-
-
 import static frc.robot.Constants.CAN_ID.*;
 import static frc.robot.Constants.Function.*;
-import static frc.robot.Constants.PID.*;
 
 public class Drivebase extends SubsystemBase {
   
@@ -36,11 +22,7 @@ public class Drivebase extends SubsystemBase {
   private WPI_TalonSRX rightFrontMotor = new WPI_TalonSRX(RIGHT_FRONT);
   private WPI_TalonSRX rightBackMotor = new WPI_TalonSRX(RIGHT_BACK);
   private MecanumDrive mecanum;
- 
-  private MecanumDriveWheelPositions wheelPositions = new MecanumDriveWheelPositions();
-  
-
-  
+   
   //private ProfiledPIDController m_PIDController = new ProfiledPIDController(rP,rI,rD, new TrapezoidProfile.Constraints(rMaxSpeed, rMaxAccel));
 
   public Drivebase() {
@@ -64,9 +46,6 @@ public class Drivebase extends SubsystemBase {
     rightFrontMotor.setInverted(true);
     rightBackMotor.setInverted(true);
     mecanum = new MecanumDrive(leftFrontMotor, leftBackMotor, rightFrontMotor, rightBackMotor);
-
-
-   
   }
 
   /**
@@ -84,14 +63,12 @@ public class Drivebase extends SubsystemBase {
    */
   public void driveWithField (double x, double y, double rotation, Rotation2d gyroAngle)
   {
-    if(notNoise(x) || notNoise(y) || notNoise(rotation))
+    if (notNoise(x) || notNoise(y) || notNoise(rotation))
     {
       mecanum.driveCartesian(x, y, rotation, gyroAngle);
     }
-
   }
 
- 
   /**
    * Drive method for Mecanum platform.
    * <p>1 is left front
@@ -101,20 +78,22 @@ public class Drivebase extends SubsystemBase {
    * @param motorNumber the motor number
    * @param speed the speed of the motor
    */
-  
 
- 
- 
   @Override
   public void periodic() {
-   
-    
+    // Put velocity
     SmartDashboard.putNumber("Motor Left Front", leftFrontMotor.get());
     SmartDashboard.putNumber("Motor Left Back", leftBackMotor.get());
     SmartDashboard.putNumber("Motor Right Front", rightFrontMotor.get());
     SmartDashboard.putNumber("Motor Right Back", rightBackMotor.get());
 
+    // Put encoder measured velocity
     SmartDashboard.putNumber("Encoder Left Front", leftFrontMotor.getSelectedSensorVelocity());
+
+    // Put talon temp
+    SmartDashboard.putNumber("Talon Left Front Temp", leftFrontMotor.getTemperature());
+    SmartDashboard.putNumber("Talon Left Back Temp", leftBackMotor.getTemperature());
+    SmartDashboard.putNumber("Talon Right Front Temp", rightFrontMotor.getTemperature());
+    SmartDashboard.putNumber("Talon Right Back Temp", rightBackMotor.getTemperature());
   }
-  
 }
