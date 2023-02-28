@@ -71,6 +71,12 @@ public final class Constants {
     public static final int TURRET = 5;
   }
 
+  /** Analog port */
+  public static class AnalogID {
+    /** MA3 absolute encoder */
+    public static final int ABSOLUTE_ENCODER = 0;
+  }
+
   /** Kinematics Meters */
   public static class KinematicsMeters {
     /** Left Front Wheel */
