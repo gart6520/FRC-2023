@@ -5,6 +5,7 @@
 package frc.robot;
 
 import edu.wpi.first.wpilibj2.command.Command;
+import edu.wpi.first.wpilibj2.command.StartEndCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
@@ -35,11 +36,38 @@ public class RobotContainer {
   private final JoystickButton LowerButton = new JoystickButton(JOYSTICK0, LowerB);
   
   // Commands
-  private Command extendOut = new ExtendV(m_Extender, 0.2);
-  private Command Retreat = new ExtendV(m_Extender, -0.2);
-  private Command Lift =  new Rotate(m_Turret, 0.3);
-  private Command Lower = new Rotate(m_Turret, -0.3);
-  
+  private Command extendOut = new StartEndCommand(()->
+  {
+    m_Extender.extendV(0.2);
+  }, 
+  ()->
+  {
+    m_Extender.extendV(0);
+  }, m_Extender);
+  private Command Retreat = new StartEndCommand(()->
+  {
+    m_Extender.extendV(-0.2);
+  }, 
+  ()->
+  {
+    m_Extender.extendV(0);
+  }, m_Extender);
+  private Command Lift = new StartEndCommand(()->
+  {
+    m_Turret.rotate(0.4);
+  }, 
+  ()->
+  {
+    m_Turret.rotate(0);
+  }, m_Turret);
+  private Command Lower = new StartEndCommand(()->
+  {
+    m_Turret.rotate(-0.4);
+  }, 
+  ()->
+  {
+    m_Turret.rotate(0);
+  }, m_Turret);
   /*
    * The AprilTag ID in the Blue's substation is 4, while the AprilTag ID in the Red's is 5
    * Get the current team color (set in DriverStation), then decide the correct AprilTag ID to aim 
