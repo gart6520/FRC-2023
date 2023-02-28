@@ -5,25 +5,16 @@
 package frc.robot;
 
 import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.CommandBase;
-import edu.wpi.first.wpilibj2.command.PIDCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
-import edu.wpi.first.math.controller.PIDController;
-import edu.wpi.first.wpilibj.DriverStation;
-import edu.wpi.first.wpilibj.DriverStation.Alliance;
-
-import static frc.robot.Constants.Controller.*;
-
-import com.fasterxml.jackson.databind.deser.std.PrimitiveArrayDeserializers;
 
 import frc.robot.commands.ExtendV;
-
 import frc.robot.commands.Rotate;
 import frc.robot.subsystems.Drivebase;
 import frc.robot.subsystems.Extender;
 import frc.robot.subsystems.Turret;
+import static frc.robot.Constants.Controller.*;
 
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
@@ -32,24 +23,22 @@ import frc.robot.subsystems.Turret;
  * subsystems, commands, and trigger mappings) should be declared here.
  */
 public class RobotContainer {
+  // Subsystem instances
+  private final Turret m_Turret = new Turret();
+  private final Extender m_Extender = new Extender();
 
   // Buttons
   private final JoystickButton driveToScoreButton = new JoystickButton(JOYSTICK0, DRIVE_TO_SCORE);
   private final JoystickButton ExtendOutButton = new JoystickButton(JOYSTICK0, ExtendOut);
   private final JoystickButton RetreatButton = new JoystickButton(JOYSTICK0, RetreatB);
-  // private final JoystickButton ExtendMaxButton = new JoystickButton(JOYSTICK0, DRIVE_TO_SCORE);
-  // private final JoystickButton ExtendMinButton = new JoystickButton(JOYSTICK0, DRIVE_TO_SCORE);
   private final JoystickButton LiftButton = new JoystickButton(JOYSTICK0, LiftB);
   private final JoystickButton LowerButton = new JoystickButton(JOYSTICK0, LowerB);
-  private final Drivebase m_Drivebase = new Drivebase();
-  private final Turret m_Turret = new Turret();
-  private final Extender m_Extender = new Extender();
+  
   // Commands
-  //private final GotoAprilTag driveToScore = new GotoAprilTag(-1); // Choose best apriltag
   private Command extendOut = new ExtendV(m_Extender, 0.2);
   private Command Retreat = new ExtendV(m_Extender, -0.2);
-  private Command Lift =  new Rotate(m_Turret, 0.4);
-  private Command Lower = new Rotate(m_Turret, -0.4);
+  private Command Lift =  new Rotate(m_Turret, 0.3);
+  private Command Lower = new Rotate(m_Turret, -0.3);
   
   /*
    * The AprilTag ID in the Blue's substation is 4, while the AprilTag ID in the Red's is 5
@@ -77,8 +66,6 @@ public class RobotContainer {
     RetreatButton.whileTrue(Retreat);
     LiftButton.whileTrue(Lift);
     LowerButton.whileTrue(Lower);
-
-   
   }
 
   /**

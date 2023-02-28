@@ -5,8 +5,10 @@
 package frc.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
+import com.ctre.phoenix.motorcontrol.TalonFXSensorCollection;
 import com.ctre.phoenix.motorcontrol.can.TalonFX;
 
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import static frc.robot.Constants.CAN_ID.*;
 
@@ -24,6 +26,20 @@ public class Extender extends SubsystemBase {
   }
   @Override
   public void periodic() {
-    // This method will be called once per scheduler run
+    ControlMode ctrlmode = extender.getControlMode();
+    TalonFXSensorCollection sc = extender.getSensorCollection();
+
+    if (ctrlmode == ControlMode.PercentOutput) {
+      SmartDashboard.putString("Extender control mode", "PercentOutput");
+    }
+
+    else if (ctrlmode == ControlMode.Position) {
+      SmartDashboard.putString("Extender control mode", "Position");
+    }
+
+    SmartDashboard.putNumber("Extender output percent", extender.getMotorOutputPercent());
+    SmartDashboard.putNumber("Extender encoder velocity", sc.getIntegratedSensorVelocity());
+    SmartDashboard.putNumber("Extender encoder position", sc.getIntegratedSensorPosition());
+    SmartDashboard.putNumber("Extender falcon temp", extender.getTemperature());
   }
 }

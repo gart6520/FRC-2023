@@ -15,28 +15,34 @@ public class NavX extends SubsystemBase {
   public NavX() {}
 
   /** Angle is not continuous from -180 to 180 degree */
-  public double getAngle()
+  public double getYaw()
   {
     return gyro.getYaw();
   }
 
+  /** Get pitch */
   public double getPitch()
   {
     return gyro.getPitch();
   }
 
-  /** Angle is continuous */
+  /** Return Rotation2d object, angle is continuous */
   public Rotation2d getRotation2d()
   {
     return gyro.getRotation2d();
   }
+
+  /** Reset gyro */
   public void reset()
   {
     gyro.reset();
   }
+
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
-    SmartDashboard.putNumber("Current ANgle", getAngle());
+    SmartDashboard.putNumber("Current Pitch", getPitch());
+    SmartDashboard.putNumber("Current Yaw", getYaw());
+    SmartDashboard.putNumber("NavX temp", gyro.getTempC());
   }
 }

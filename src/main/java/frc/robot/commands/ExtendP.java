@@ -10,9 +10,9 @@ import frc.robot.subsystems.Extender;
 public class ExtendP extends CommandBase {
   private Extender m_extend;
   private double x;
-  public ExtendP(Extender extender, double spd) {
+  public ExtendP(Extender extender, double pst) {
     extender = m_extend;
-    x = spd;
+    x = pst;
     addRequirements(m_extend);
     // Use addRequirements() here to declare subsystem dependencies.
   }

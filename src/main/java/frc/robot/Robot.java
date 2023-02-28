@@ -11,7 +11,7 @@ import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import frc.robot.commands.DriveJoystick;
 import frc.robot.subsystems.Drivebase;
-import static frc.robot.Constants.SingleInstance.*;
+import frc.robot.subsystems.NavX;
 
 /**
  * The VM is configured to automatically run this class, and to call the functions corresponding to
@@ -22,10 +22,14 @@ import static frc.robot.Constants.SingleInstance.*;
 public class Robot extends TimedRobot {
   private Command m_autonomousCommand;
   private RobotContainer m_robotContainer;
-  private Drivebase m_Drivebase;
-  private Counter m_lidar;
+
+  // Subsystem instances
+  private Drivebase m_Drivebase = new Drivebase();
+  private NavX m_gyro = new NavX();
+  private Counter m_lidar = new Counter();
+
   // Commands
-  private DriveJoystick m_DriveJoystick = new DriveJoystick(m_Drivebase,GYRO);
+  private DriveJoystick m_DriveJoystick = new DriveJoystick(m_Drivebase, m_gyro);
 
   /**
    * This function is run when the robot is first started up and should be used for any
@@ -36,7 +40,6 @@ public class Robot extends TimedRobot {
     // Instantiate our RobotContainer.  This will perform all our button bindings, and put our
     // autonomous chooser on the dashboard.
     m_robotContainer = new RobotContainer();
-    m_lidar = new Counter();
   }
 
   /**
@@ -94,6 +97,7 @@ public class Robot extends TimedRobot {
   @Override
   public void teleopPeriodic() {
     SmartDashboard.putData(CommandScheduler.getInstance());
+
     // Run commands repeatedly until teleop mode disabled
     m_DriveJoystick.execute();
   }
