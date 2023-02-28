@@ -5,6 +5,7 @@
 package frc.robot.subsystems;
 
 import com.ctre.phoenix.motorcontrol.ControlMode;
+import com.ctre.phoenix.motorcontrol.NeutralMode;
 import com.ctre.phoenix.motorcontrol.TalonFXSensorCollection;
 import com.ctre.phoenix.motorcontrol.can.TalonFX;
 
@@ -15,7 +16,9 @@ import static frc.robot.Constants.CAN_ID.*;
 public class Extender extends SubsystemBase {
   public TalonFX extender = new TalonFX(EXTEND);
   /** Creates a new Extender. */
-  public Extender() {}
+  public Extender() {
+    extender.setNeutralMode(NeutralMode.Brake);
+  }
 
   public void extendV(double X) {
     extender.set(ControlMode.PercentOutput, X);

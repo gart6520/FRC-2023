@@ -10,8 +10,6 @@ import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 
-import frc.robot.commands.ExtendV;
-import frc.robot.commands.Rotate;
 import frc.robot.subsystems.Drivebase;
 import frc.robot.subsystems.Extender;
 import frc.robot.subsystems.Turret;
@@ -44,6 +42,7 @@ public class RobotContainer {
   {
     m_Extender.extendV(0);
   }, m_Extender);
+
   private Command Retreat = new StartEndCommand(()->
   {
     m_Extender.extendV(-0.2);
@@ -52,6 +51,7 @@ public class RobotContainer {
   {
     m_Extender.extendV(0);
   }, m_Extender);
+
   private Command Lift = new StartEndCommand(()->
   {
     m_Turret.rotate(0.4);
@@ -60,6 +60,7 @@ public class RobotContainer {
   {
     m_Turret.rotate(0);
   }, m_Turret);
+
   private Command Lower = new StartEndCommand(()->
   {
     m_Turret.rotate(-0.4);
@@ -89,7 +90,6 @@ public class RobotContainer {
    * joysticks}.
    */
   private void configureBindings() {
-
     ExtendOutButton.whileTrue(extendOut);
     RetreatButton.whileTrue(Retreat);
     LiftButton.whileTrue(Lift);
