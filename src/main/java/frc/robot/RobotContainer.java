@@ -10,10 +10,10 @@ import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
 
-import frc.robot.subsystems.Drivebase;
 import frc.robot.subsystems.Extender;
 import frc.robot.subsystems.Turret;
 import static frc.robot.Constants.Controller.*;
+import static frc.robot.Constants.AnalogID.*;
 
 /**
  * This class is where the bulk of the robot should be declared. Since Command-based is a
@@ -23,7 +23,7 @@ import static frc.robot.Constants.Controller.*;
  */
 public class RobotContainer {
   // Subsystem instances
-  private final Turret m_Turret = new Turret();
+  private final Turret m_Turret = new Turret(ABSOLUTE_ENCODER);
   private final Extender m_Extender = new Extender();
 
   // Buttons

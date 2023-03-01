@@ -26,7 +26,6 @@ public class Robot extends TimedRobot {
   // Subsystem instances
   private Drivebase m_Drivebase = new Drivebase();
   private NavX m_gyro = new NavX();
-  private Counter m_lidar = new Counter();
 
   // Commands
   private DriveJoystick m_DriveJoystick = new DriveJoystick(m_Drivebase, m_gyro);
