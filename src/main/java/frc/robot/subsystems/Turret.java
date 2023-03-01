@@ -15,10 +15,11 @@ import static frc.robot.Constants.CAN_ID.*;
 public class Turret extends SubsystemBase {
   public WPI_TalonSRX turret = new WPI_TalonSRX(TURRET);
   private AnalogEncoder absEncoder;
+
   /** Creates a new Turret. */
   public Turret(int channel) {
     absEncoder = new AnalogEncoder(channel);
-    absEncoder.setDistancePerRotation(2*Math.PI); //Such that a revolution = 2pi radian
+    absEncoder.setDistancePerRotation(2 * Math.PI); // Such that a revolution = 2pi radian
     turret.setNeutralMode(NeutralMode.Brake);
   }
 
