@@ -18,11 +18,15 @@ import frc.robot.subsystems.Drivebase;
 import frc.robot.subsystems.NavX;
 
 /**
- * The Constants class provides a convenient place for teams to hold robot-wide numerical or boolean
- * constants. This class should not be used for any other purpose. All constants should be declared
+ * The Constants class provides a convenient place for teams to hold robot-wide
+ * numerical or boolean
+ * constants. This class should not be used for any other purpose. All constants
+ * should be declared
  * globally (i.e. public static). Do not put anything functional in this class.
  *
- * <p>It is advised to statically import this class (or one of its inner classes) wherever the
+ * <p>
+ * It is advised to statically import this class (or one of its inner classes)
+ * wherever the
  * constants are needed, to reduce verbosity.
  */
 public final class Constants {
@@ -69,6 +73,8 @@ public final class Constants {
     public static final int EXTEND = 6;
     /** Turret motor */
     public static final int TURRET = 5;
+    //
+    public static final int GRABBER = 7;
   }
 
   /** Analog port */
@@ -101,11 +107,20 @@ public final class Constants {
   /** Controller button mapping */
   public static class Controller {
     // Joysticks
-    
+
     /** First Joystick */
     public static final Joystick JOYSTICK0 = new Joystick(0);
+    public static final int LEFT = 1;
+    public static final int DOWN = 2;
+    public static final int RIGHT = 3;
+    public static final int UP = 4;
+    public static final int L1 = 5;
+    public static final int R1 = 6;
+    public static final int L2 = 3;
+    public static final int R2 = 4;
+
     /** Second Joystick */
-    //public static Joystick JOYSTICK1 = new Joystick(1);
+    public static Joystick JOYSTICK1 = new Joystick(1);
 
     // Axises
 
@@ -114,9 +129,9 @@ public final class Constants {
     /** Y axis of the left joystick */
     public static final int YAXISLEFT = 1;
     /** X axis of the right joystick */
-    public static final int XAXISRIGHT = 5;
+    public static final int XAXISRIGHT = 2;
     /** Y axis of the right joystick */
-    public static final int YAXISRIGHT = 2;
+    public static final int YAXISRIGHT = 5;
 
     // Buttons
     /** Boost speed button */
@@ -125,24 +140,27 @@ public final class Constants {
     public static final int DRIVE_TO_SCORE = 1;
     /** Auto drive to double substation */
     public static final int DRIVE_TO_SUBSTATION = 2;
-    public static final int ExtendOut = 3;
-    public static final int RetreatB = 1;
-    public static final int LiftB = 4;
-    public static final int LowerB = 2;
-    
+    public static final int ExtendOut = 5;
+    public static final int LiftB = 5;
+    public static final int LowerB = 6;
+    public static final int GrabB = 1;
+    public static final int RealeaseB = 3;
+
   }
 
   /** Vision configs */
   public static class VisionConfigs {
     /**
      * Limelight camera
-     * The camera name must be the same as the name of the camera in the PhotonVision GUI
+     * The camera name must be the same as the name of the camera in the
+     * PhotonVision GUI
      */
     public static PhotonCamera limelight = new PhotonCamera("limelight");
 
     /**
      * Second camera (faced robot's back) plugged into Limelight's USB port
-     * The camera name must be the same as the name of the camera in the PhotonVision GUI
+     * The camera name must be the same as the name of the camera in the
+     * PhotonVision GUI
      */
     public static PhotonCamera backcam = new PhotonCamera("backcam");
 
@@ -154,57 +172,68 @@ public final class Constants {
 
     /**
      * ROBOT_TO_LIMELIGHT 3D vector
-     * This 3D vector stores the location of the robot in relative to the Limelight camera
-     * We haven't completed the real robot to test yet, so we put the example configuration
+     * This 3D vector stores the location of the robot in relative to the Limelight
+     * camera
+     * We haven't completed the real robot to test yet, so we put the example
+     * configuration
      * here from PhotonVision library:
      * 
-     * Cam mounted facing forward, half a meter forward of center, half a meter up from center
+     * Cam mounted facing forward, half a meter forward of center, half a meter up
+     * from center
      */
-    public static final Transform3d ROBOT_TO_LIMELIGHT = new Transform3d(new Translation3d(0.5, 0.0, 0.5), new Rotation3d(0, 0, 0));
+    public static final Transform3d ROBOT_TO_LIMELIGHT = new Transform3d(new Translation3d(0.5, 0.0, 0.5),
+        new Rotation3d(0, 0, 0));
 
     /**
      * ROBOT_TO_BACKCAM 3D vector
-     * This 3D vector stores the location of the robot in relative to the Limelight camera
-     * We haven't completed the real robot to test yet, so we put the example configuration
+     * This 3D vector stores the location of the robot in relative to the Limelight
+     * camera
+     * We haven't completed the real robot to test yet, so we put the example
+     * configuration
      * here from PhotonVision library, but with modifications:
      * 
-     * Cam mounted facing backward, half a meter backward of center, half a meter up from center
+     * Cam mounted facing backward, half a meter backward of center, half a meter up
+     * from center
      */
-    public static final Transform3d ROBOT_TO_BACKCAM = new Transform3d(new Translation3d(-0.5, 0.0, 0.5), new Rotation3d(0, 0, 180));
+    public static final Transform3d ROBOT_TO_BACKCAM = new Transform3d(new Translation3d(-0.5, 0.0, 0.5),
+        new Rotation3d(0, 0, 180));
 
     /**
      * TAG_TO_GOAL 3D vector
-     * This 3D vector stores the location of the destination point the robot *will* go to in
-     * relative to the apriltag's location. We haven't completed the robot yet, so we are not
-     * sure how long exactly the robot hand will be, so we will just put a random value here
+     * This 3D vector stores the location of the destination point the robot *will*
+     * go to in
+     * relative to the apriltag's location. We haven't completed the robot yet, so
+     * we are not
+     * sure how long exactly the robot hand will be, so we will just put a random
+     * value here
      * But there are something to note (in this value):
      * 
      * - The robot dest point is to be 1m backward to the apriltag
      * - Robot will face up with the apriltag, so yaw angle should be 180 degree
      * - Robot will be -0.6 meter compared to the apriltag (refer to manual)
-     *   It doesn't matter, because we will convert this to Pose2d and ignore the Z :)
+     * It doesn't matter, because we will convert this to Pose2d and ignore the Z :)
      */
-    public static final Transform3d TAG_TO_GOAL = new Transform3d(new Translation3d(-1, 0.0, -0.6), new Rotation3d(0, 0, 180));
+    public static final Transform3d TAG_TO_GOAL = new Transform3d(new Translation3d(-1, 0.0, -0.6),
+        new Rotation3d(0, 0, 180));
   }
-  
-  public final static class Function{
+
+  public final static class Function {
     /** Return whether the value is bigger than noise value (sensitivity) */
-    public static boolean notNoise (double val)
-    {
+    public static boolean notNoise(double val) {
       return Math.abs(val) > Sensitivity.JOYSTICK_SENSE;
     }
 
     /** Return 1 if value > 0 and -1 if value < 0. Else return 0 */
-    public static double signof(double val)
-    {
-      if (val > 0) return 1;
-      if (val < 0) return -1;
+    public static double signof(double val) {
+      if (val > 0)
+        return 1;
+      if (val < 0)
+        return -1;
       return 0;
     }
 
     /** Return square of value with sign added */
-    public static double signedSqr(double val)
-    {
+    public static double signedSqr(double val) {
       return signof(val) * val * val;
     }
   }
