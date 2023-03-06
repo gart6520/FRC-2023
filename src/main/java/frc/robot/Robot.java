@@ -91,6 +91,9 @@ public class Robot extends TimedRobot {
     if (m_autonomousCommand != null) {
       m_autonomousCommand.cancel();
     }
+
+    // Reset Gyro
+    m_gyro.reset();
   }
 
   /** This function is called periodically during operator control. */

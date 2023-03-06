@@ -46,27 +46,27 @@ public class RobotContainer {
   // ((Drivebase)null).periodic();
   // });
   private Command extendP1 = new StartEndCommand(() -> {
-    m_Extender.extendP(-2000);
+    //m_Extender.extendP(-2000);
   },
       () -> {
         ;
       }, m_Extender);
   private Command extendP2 = new StartEndCommand(() -> {
-    m_Extender.extendP(-20000);
+    //m_Extender.extendP(-20000);
   },
       () -> {
         //m_Extender.extendV(-0);
         ;
       }, m_Extender);
   private Command extendP3 = new StartEndCommand(() -> {
-    m_Extender.extendP(-50000);
+    //m_Extender.extendP(-50000);
   },
       () -> {
         //m_Extender.extendV(0);
         ;
       }, m_Extender);
   private Command extendP4 = new StartEndCommand(() -> {
-    m_Extender.extendP(-90000);
+    //m_Extender.extendP(-90000);
   },
       () -> {
         ;
@@ -145,7 +145,7 @@ public class RobotContainer {
     new JoystickButton(JOYSTICK1, RIGHT).whileTrue(extendP3);
     new JoystickButton(JOYSTICK1, UP).whileTrue(extendP4);
     new JoystickButton(JOYSTICK1, 5).whileTrue(extendV1);
-
+    new JoystickButton(JOYSTICK1, 6).whileTrue(extendV2);
     LiftButton.whileTrue(Lift);
     LowerButton.whileTrue(Lower);
     GrabButton.whileTrue(Grab);
