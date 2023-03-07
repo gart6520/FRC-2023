@@ -11,7 +11,7 @@ import edu.wpi.first.wpilibj2.command.StartEndCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
-
+import frc.robot.commands.ButtonBinding;
 import frc.robot.subsystems.Drivebase;
 import frc.robot.subsystems.Extender;
 import frc.robot.subsystems.Grabber;
@@ -29,17 +29,17 @@ import static frc.robot.Constants.Controller.*;
  */
 public class RobotContainer {
   // Subsystem instances
-  private final Turret m_Turret = new Turret();
+
   private final Extender m_Extender = new Extender();
   private final Grabber m_Grabber = new Grabber();
+
   // Buttons
   private final JoystickButton driveToScoreButton = new JoystickButton(JOYSTICK1, DRIVE_TO_SCORE);
   private final JoystickButton extend1Button = new JoystickButton(JOYSTICK1, ExtendOut);
-  private final JoystickButton LiftButton = new JoystickButton(JOYSTICK0, LiftB);
-  private final JoystickButton LowerButton = new JoystickButton(JOYSTICK0, LowerB);
-  private final JoystickButton GrabButton = new JoystickButton(JOYSTICK1, GrabB);
-  private final JoystickButton ReleaseButton = new JoystickButton(JOYSTICK1, RealeaseB);
+  private final JoystickButton GrabButton = new JoystickButton(JOYSTICK0, GrabB);
+  private final JoystickButton ReleaseButton = new JoystickButton(JOYSTICK0, RealeaseB);
   // Commands
+
   // private Command endAll = new InstantCommand(()->
   // {
   // CommandScheduler.getInstance().cancelAll();
@@ -85,27 +85,15 @@ public class RobotContainer {
             
           }, m_Extender);
 
-  private Command Lift = new StartEndCommand(() -> {
-    m_Turret.rotate(0.3);
-  },
-      () -> {
-        m_Turret.rotate(0);
-      }, m_Turret);
-
-  private Command Lower = new StartEndCommand(() -> {
-    m_Turret.rotate(-0.3);
-  },
-      () -> {
-        m_Turret.rotate(0);
-      }, m_Turret);
+ 
   private Command Grab = new StartEndCommand(() -> {
-    m_Grabber.grabV(1);
+    m_Grabber.grabV(0.5);
   },
       () -> {
         m_Grabber.grabV(0);
       }, m_Grabber);
   private Command Release = new StartEndCommand(() -> {
-    m_Grabber.grabV(-1);
+    m_Grabber.grabV(-0.5);
   },
       () -> {
         m_Grabber.grabV(0);
@@ -146,8 +134,7 @@ public class RobotContainer {
     new JoystickButton(JOYSTICK1, UP).whileTrue(extendP4);
     new JoystickButton(JOYSTICK1, 5).whileTrue(extendV1);
     new JoystickButton(JOYSTICK1, 6).whileTrue(extendV2);
-    LiftButton.whileTrue(Lift);
-    LowerButton.whileTrue(Lower);
+
     GrabButton.whileTrue(Grab);
     ReleaseButton.whileTrue(Release);
   }
@@ -158,7 +145,7 @@ public class RobotContainer {
    * @return the command to run in autonomous
    */
   public Command getAutonomousCommand() {
-    return Lift;
+    return null;
 
     // new PIDCommand(
     // new PIDController(0.1,0,0),

@@ -18,7 +18,7 @@ public class Turret extends SubsystemBase {
   public Turret() {}
 
   public void rotate(double x) {
-    turret.set(x);
+    turret.setVoltage(x);
   }
   @Override
   public void periodic() {

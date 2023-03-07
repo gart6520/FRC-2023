@@ -126,22 +126,23 @@ public final class Constants {
     /** Y axis of the left joystick */
     public static final int YAXISLEFT = 1;
     /** X axis of the right joystick */
-    public static final int XAXISRIGHT = 2;
+    public static final int XAXISRIGHT = 4;
     /** Y axis of the right joystick */
     public static final int YAXISRIGHT = 5;
 
     // Buttons
     /** Boost speed button */
-    public static final int BOOST = 4;
+    public static final int BOOST = 3;
+    public static final int SLOW = 2;
     /** Auto drive to scoring zone button */
     public static final int DRIVE_TO_SCORE = 1;
     /** Auto drive to double substation */
     public static final int DRIVE_TO_SUBSTATION = 2;
     public static final int ExtendOut = 5;
-    public static final int LiftB = 5;
-    public static final int LowerB = 6;
-    public static final int GrabB = 1;
-    public static final int RealeaseB = 3;
+    public static final int LiftB = 3;
+    public static final int LowerB = 2;
+    public static final int GrabB = 6;
+    public static final int RealeaseB = 5;
 
   }
 
