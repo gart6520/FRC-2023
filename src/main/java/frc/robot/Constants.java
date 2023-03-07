@@ -14,9 +14,6 @@ import edu.wpi.first.apriltag.AprilTagFields;
 import edu.wpi.first.math.geometry.Rotation3d;
 import edu.wpi.first.math.trajectory.TrapezoidProfile;
 
-import frc.robot.subsystems.Drivebase;
-import frc.robot.subsystems.NavX;
-
 /**
  * The Constants class provides a convenient place for teams to hold robot-wide
  * numerical or boolean
@@ -69,11 +66,11 @@ public final class Constants {
     public static final int RIGHT_FRONT = 3;
     /** Right Back Motor */
     public static final int RIGHT_BACK = 4;
-    /** Extender Motor */
-    public static final int EXTEND = 6;
     /** Turret motor */
     public static final int TURRET = 5;
-    //
+    /** Extender Motor */
+    public static final int EXTEND = 6;
+    /** Grabber Motor */
     public static final int GRABBER = 7;
   }
 

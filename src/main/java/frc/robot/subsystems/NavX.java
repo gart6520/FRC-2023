@@ -26,6 +26,12 @@ public class NavX extends SubsystemBase {
     return gyro.getPitch();
   }
 
+  /** Get roll */
+  public double getRoll()
+  {
+    return gyro.getRoll();
+  }
+
   /** Return Rotation2d object, angle is continuous */
   public Rotation2d getRotation2d()
   {
@@ -43,6 +49,7 @@ public class NavX extends SubsystemBase {
     // This method will be called once per scheduler run
     SmartDashboard.putNumber("Current Pitch", getPitch());
     SmartDashboard.putNumber("Current Yaw", getYaw());
+    SmartDashboard.putNumber("Current Roll", getRoll());
     SmartDashboard.putNumber("NavX temp", gyro.getTempC());
   }
 }

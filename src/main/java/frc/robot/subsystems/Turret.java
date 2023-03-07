@@ -4,19 +4,18 @@
 
 package frc.robot.subsystems;
 
-import com.ctre.phoenix.motorcontrol.NeutralMode;
-import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
+import com.revrobotics.CANSparkMax;
+import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import static frc.robot.Constants.CAN_ID.*;
 
 public class Turret extends SubsystemBase {
-  public WPI_TalonSRX turret = new WPI_TalonSRX(TURRET);
+  public CANSparkMax turret = new CANSparkMax(TURRET, MotorType.kBrushless);
+
   /** Creates a new Turret. */
-  public Turret() {
-    turret.setNeutralMode(NeutralMode.Brake);
-  }
+  public Turret() {}
 
   public void rotate(double x) {
     turret.set(x);
@@ -24,6 +23,6 @@ public class Turret extends SubsystemBase {
   @Override
   public void periodic() {
     SmartDashboard.putNumber("Turret velocity", turret.get());
-    SmartDashboard.putNumber("Talon Turret Temp", turret.getTemperature());
+    SmartDashboard.putNumber("Talon Turret Temp", turret.getMotorTemperature());
   }
 }

@@ -86,14 +86,14 @@ public class RobotContainer {
           }, m_Extender);
 
   private Command Lift = new StartEndCommand(() -> {
-    m_Turret.rotate(0.6);
+    m_Turret.rotate(0.3);
   },
       () -> {
         m_Turret.rotate(0);
       }, m_Turret);
 
   private Command Lower = new StartEndCommand(() -> {
-    m_Turret.rotate(-0.6);
+    m_Turret.rotate(-0.3);
   },
       () -> {
         m_Turret.rotate(0);
