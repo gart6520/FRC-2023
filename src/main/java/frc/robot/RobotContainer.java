@@ -11,11 +11,18 @@ import edu.wpi.first.wpilibj2.command.StartEndCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
+import edu.wpi.first.wpilibj.DriverStation;
+import edu.wpi.first.wpilibj.DriverStation.Alliance;
+
+import frc.robot.commands.GotoAprilTag;
 import frc.robot.commands.ButtonBinding;
+
 import frc.robot.subsystems.Drivebase;
 import frc.robot.subsystems.Extender;
 import frc.robot.subsystems.Grabber;
 import frc.robot.subsystems.Turret;
+import frc.robot.subsystems.Vision;
+
 import static frc.robot.Constants.Controller.*;
 
 /**
@@ -29,22 +36,27 @@ import static frc.robot.Constants.Controller.*;
  */
 public class RobotContainer {
   // Subsystem instances
-
   private final Extender m_Extender = new Extender();
   private final Grabber m_Grabber = new Grabber();
+  private final Drivebase m_Drivebase = new Drivebase();
+  private final Vision m_Vision = new Vision();
 
   // Buttons
-  private final JoystickButton driveToScoreButton = new JoystickButton(JOYSTICK1, DRIVE_TO_SCORE);
+  private final JoystickButton driveToScoreButton = new JoystickButton(JOYSTICK0, DRIVE_TO_SCORE);
+  private final JoystickButton driveToSubstationButton = new JoystickButton(JOYSTICK0, DRIVE_TO_SUBSTATION);
+
   private final JoystickButton extend1Button = new JoystickButton(JOYSTICK1, ExtendOut);
   private final JoystickButton GrabButton = new JoystickButton(JOYSTICK0, GrabB);
   private final JoystickButton ReleaseButton = new JoystickButton(JOYSTICK0, RealeaseB);
+  
   // Commands
-
   // private Command endAll = new InstantCommand(()->
   // {
   // CommandScheduler.getInstance().cancelAll();
   // ((Drivebase)null).periodic();
   // });
+  private final GotoAprilTag driveToScore = new GotoAprilTag(-1, m_Drivebase, m_Vision); // Choose best apriltag
+
   private Command extendP1 = new StartEndCommand(() -> {
     //m_Extender.extendP(-2000);
   },
@@ -98,12 +110,15 @@ public class RobotContainer {
       () -> {
         m_Grabber.grabV(0);
       }, m_Grabber);
+  
   /*
    * The AprilTag ID in the Blue's substation is 4, while the AprilTag ID in the
    * Red's is 5
    * Get the current team color (set in DriverStation), then decide the correct
    * AprilTag ID to aim
    */
+  private final GotoAprilTag driveToSubstation
+    = new GotoAprilTag(DriverStation.getAlliance() == Alliance.Blue ? 4 : 5, m_Drivebase, m_Vision);
 
   /**
    * The container for the robot. Contains subsystems, OI devices, and commands.
@@ -137,6 +152,8 @@ public class RobotContainer {
 
     GrabButton.whileTrue(Grab);
     ReleaseButton.whileTrue(Release);
+    driveToScoreButton.whileTrue(driveToScore);
+    driveToSubstationButton.whileTrue(driveToSubstation);
   }
 
   /**
