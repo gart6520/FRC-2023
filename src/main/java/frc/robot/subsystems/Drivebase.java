@@ -9,6 +9,7 @@ import com.ctre.phoenix.motorcontrol.can.WPI_TalonSRX;
 
 import edu.wpi.first.math.geometry.Rotation2d;
 import edu.wpi.first.wpilibj.drive.MecanumDrive;
+import edu.wpi.first.wpilibj.smartdashboard.Field2d;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import static frc.robot.Constants.CAN_ID.*;
@@ -22,6 +23,13 @@ public class Drivebase extends SubsystemBase {
   private WPI_TalonSRX rightFrontMotor = new WPI_TalonSRX(RIGHT_FRONT);
   private WPI_TalonSRX rightBackMotor = new WPI_TalonSRX(RIGHT_BACK);
   private MecanumDrive mecanum;
+
+  /*// Field pose, only for simulation
+  private final Field2d m_field = new Field2d();
+  private double l_x = 3;
+  private double l_y = 3;
+  private double l_r = 0;
+  private double delay_counter = 0;*/
    
   //private ProfiledPIDController m_PIDController = new ProfiledPIDController(rP,rI,rD, new TrapezoidProfile.Constraints(rMaxSpeed, rMaxAccel));
 
@@ -46,6 +54,9 @@ public class Drivebase extends SubsystemBase {
     rightFrontMotor.setInverted(true);
     rightBackMotor.setInverted(true);
     mecanum = new MecanumDrive(leftFrontMotor, leftBackMotor, rightFrontMotor, rightBackMotor);
+
+    // Put current Field2d object to SmartDashboard, only for simulation
+    //SmartDashboard.putData("Field", m_field);
   }
 
   /**
@@ -66,6 +77,23 @@ public class Drivebase extends SubsystemBase {
     if (notNoise(x) || notNoise(y) || notNoise(rotation))
     {
       mecanum.driveCartesian(x, y, rotation, gyroAngle);
+
+      /*// Update the Field2d value, only for simulation
+      if (delay_counter == 10) {
+        l_x += x * 0.05;
+        l_y += y * 0.05;
+        l_r += rotation * 20;
+        double r = (l_r % 360 > 180 ? -1 : 1) * (l_r % 180);
+
+        SmartDashboard.putNumber("Simulated X", l_x);
+        SmartDashboard.putNumber("Simulated Y", l_y);
+        SmartDashboard.putNumber("Simulated R degree", r);
+        m_field.setRobotPose(l_x += x, l_y += y, new Rotation2d(r * Math.PI / 180));
+        
+        delay_counter = 0;
+      }
+      
+      delay_counter++;*/
     }
   }
 

@@ -14,6 +14,8 @@ import edu.wpi.first.apriltag.AprilTagFields;
 import edu.wpi.first.math.geometry.Rotation3d;
 import edu.wpi.first.math.trajectory.TrapezoidProfile;
 
+import frc.robot.subsystems.*;
+
 /**
  * The Constants class provides a convenient place for teams to hold robot-wide
  * numerical or boolean
@@ -139,11 +141,10 @@ public final class Constants {
     /** Auto drive to double substation */
     public static final int DRIVE_TO_SUBSTATION = 2;
     public static final int ExtendOut = 5;
-    public static final int LiftB = 3;
-    public static final int LowerB = 2;
+    public static final int TurretAxis = 1;
+    //public static final int LowerB = 2;
     public static final int GrabB = 6;
     public static final int RealeaseB = 5;
-
   }
 
   /** Vision configs */
@@ -160,7 +161,7 @@ public final class Constants {
      * The camera name must be the same as the name of the camera in the
      * PhotonVision GUI
      */
-    public static PhotonCamera backcam = new PhotonCamera("backcam");
+    //public static PhotonCamera backcam = new PhotonCamera("backcam");
 
     /**
      * Field layout file path
@@ -213,6 +214,11 @@ public final class Constants {
      */
     public static final Transform3d TAG_TO_GOAL = new Transform3d(new Translation3d(-1, 0.0, -0.6),
         new Rotation3d(0, 0, 180));
+    
+    /**
+     * Double substation target location
+     */
+    public static final Translation2d doubleSubstationLocation1 = new Translation2d(3.0, 3.0);
   }
 
   public final static class Function {
@@ -234,5 +240,15 @@ public final class Constants {
     public static double signedSqr(double val) {
       return signof(val) * val * val;
     }
+  }
+
+  /** Single subsystem instances */
+  public static class SubsystemInstance {
+    public static Drivebase m_Drivebase = new Drivebase();
+    public static Extender m_Extender = new Extender();
+    public static Grabber m_Grabber = new Grabber();
+    public static NavX m_Gyro = new NavX();
+    public static Turret m_Turret = new Turret();
+  
   }
 }

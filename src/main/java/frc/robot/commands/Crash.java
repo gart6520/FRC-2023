@@ -5,32 +5,24 @@
 package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
-import static frc.robot.Constants.SubsystemInstance.*;
 
-public class AutoBalance extends CommandBase {
-  /** Creates a new AutoBalance. */
-
-  public AutoBalance() {
-    addRequirements(m_Drivebase);
-    addRequirements(m_Gyro);
-  }
+public class Crash extends CommandBase {
+  /** Creates a new Crash. */
+  public Crash() {}
 
   // Called when the command is initially scheduled.
   @Override
-  public void initialize() {}
+  public void initialize() {
+    throw new RuntimeException("USER REQUEST TO CRASH ROBOT");
+  }
 
   // Called every time the scheduler runs while the command is scheduled.
   @Override
-  public void execute() {
-    double speed = m_Gyro.getPitch() * 0.05;
-    m_Drivebase.driveWithField(speed, 0, 0, m_Gyro.getRotation2d());
-  }
+  public void execute() {}
 
   // Called once the command ends or is interrupted.
   @Override
-  public void end(boolean interrupted) {
-    m_Drivebase.driveWithField(0, 0, 0, m_Gyro.getRotation2d());
-  }
+  public void end(boolean interrupted) {}
 
   // Returns true when the command should end.
   @Override
