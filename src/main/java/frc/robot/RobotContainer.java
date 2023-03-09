@@ -5,18 +5,17 @@
 package frc.robot;
 
 import edu.wpi.first.wpilibj2.command.Command;
-import edu.wpi.first.wpilibj2.command.CommandScheduler;
-import edu.wpi.first.wpilibj2.command.InstantCommand;
 import edu.wpi.first.wpilibj2.command.StartEndCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
-import frc.robot.commands.ButtonBinding;
-import frc.robot.subsystems.Drivebase;
-import frc.robot.subsystems.Extender;
-import frc.robot.subsystems.Grabber;
-import frc.robot.subsystems.Turret;
+import edu.wpi.first.math.geometry.Rotation2d;
+import frc.robot.commands.Crash;
+//import frc.robot.commands.GotoLocation;
+
+import static frc.robot.Constants.SubsystemInstance.*;
 import static frc.robot.Constants.Controller.*;
+import static frc.robot.Constants.VisionConfigs.*;
 
 /**
  * This class is where the bulk of the robot should be declared. Since
@@ -28,82 +27,74 @@ import static frc.robot.Constants.Controller.*;
  * subsystems, commands, and trigger mappings) should be declared here.
  */
 public class RobotContainer {
-  // Subsystem instances
-
-  private final Extender m_Extender = new Extender();
-  private final Grabber m_Grabber = new Grabber();
-
   // Buttons
-  private final JoystickButton driveToScoreButton = new JoystickButton(JOYSTICK1, DRIVE_TO_SCORE);
-  private final JoystickButton extend1Button = new JoystickButton(JOYSTICK1, ExtendOut);
+  private final JoystickButton driveToScoreButton = new JoystickButton(JOYSTICK0, DRIVE_TO_SCORE);
+  private final JoystickButton driveToSubstationButton = new JoystickButton(JOYSTICK0, DRIVE_TO_SUBSTATION);
+
   private final JoystickButton GrabButton = new JoystickButton(JOYSTICK0, GrabB);
   private final JoystickButton ReleaseButton = new JoystickButton(JOYSTICK0, RealeaseB);
+  
   // Commands
+  private final Crash m_Crash = new Crash();
+  //private final GotoAprilTag driveToScore = new GotoAprilTag(-1); // Choose best apriltag
+  //private final GotoLocation driveToScore = new GotoLocation(doubleSubstationLocation1, Rotation2d.fromDegrees(180));
+  //private final GotoLocation driveToSubstation = new GotoLocation(doubleSubstationLocation1, Rotation2d.fromDegrees(180));
 
-  // private Command endAll = new InstantCommand(()->
-  // {
-  // CommandScheduler.getInstance().cancelAll();
-  // ((Drivebase)null).periodic();
-  // });
   private Command extendP1 = new StartEndCommand(() -> {
-    //m_Extender.extendP(-2000);
-  },
-      () -> {
-        ;
-      }, m_Extender);
-  private Command extendP2 = new StartEndCommand(() -> {
-    //m_Extender.extendP(-20000);
-  },
-      () -> {
-        //m_Extender.extendV(-0);
-        ;
-      }, m_Extender);
-  private Command extendP3 = new StartEndCommand(() -> {
-    //m_Extender.extendP(-50000);
-  },
-      () -> {
-        //m_Extender.extendV(0);
-        ;
-      }, m_Extender);
-  private Command extendP4 = new StartEndCommand(() -> {
-    //m_Extender.extendP(-90000);
-  },
-      () -> {
-        ;
-      }, m_Extender);
-  private Command extendV1 = new StartEndCommand(() -> {
-        m_Extender.extendV(-0.2);
-      },
-          () -> {
-            m_Extender.extendV(0);
-          }, m_Extender);
-  private Command extendV2 = new StartEndCommand(() -> {
-        m_Extender.extendV(0.2);
-      },
-          () -> {
-            m_Extender.extendV(0);
-            
-          }, m_Extender);
+    m_Extender.extendP(-2000);
+  }, () -> {
+    ;}
+  , m_Extender);
 
- 
+  private Command extendP2 = new StartEndCommand(() -> {
+    m_Extender.extendP(-20000);
+  }, () -> {
+    //m_Extender.extendV(-0);
+    ;
+  }, m_Extender);
+
+  private Command extendP3 = new StartEndCommand(() -> {
+    m_Extender.extendP(-50000);
+  }, () -> {
+    //m_Extender.extendV(0);
+    ;
+  }, m_Extender);
+
+  private Command extendP4 = new StartEndCommand(() -> {
+    m_Extender.extendP(-90000);
+  }, () -> {
+    ;
+  }, m_Extender);
+
+  private Command extendV1 = new StartEndCommand(() -> {
+    m_Extender.extendV(-0.2);
+  }, () -> {
+    m_Extender.extendV(0);
+  }, m_Extender);
+
+  private Command extendV2 = new StartEndCommand(() -> {
+    m_Extender.extendV(0.2);
+  }, () -> {
+    m_Extender.extendV(0);
+  }, m_Extender);
+
   private Command Grab = new StartEndCommand(() -> {
     m_Grabber.grabV(0.5);
-  },
-      () -> {
-        m_Grabber.grabV(0);
-      }, m_Grabber);
+  }, () -> {
+    m_Grabber.grabV(0);
+  }, m_Grabber);
+
   private Command Release = new StartEndCommand(() -> {
     m_Grabber.grabV(-0.5);
-  },
-      () -> {
-        m_Grabber.grabV(0);
-      }, m_Grabber);
-  /*
-   * The AprilTag ID in the Blue's substation is 4, while the AprilTag ID in the
-   * Red's is 5
-   * Get the current team color (set in DriverStation), then decide the correct
-   * AprilTag ID to aim
-   */
+  }, () -> {
+    m_Grabber.grabV(0);
+  }, m_Grabber);
+
+  private Command ResetGyro = new StartEndCommand(() -> {
+    m_Gyro.reset();
+  }, () -> {
+    ;
+  }, m_Grabber);
 
   /**
    * The container for the robot. Contains subsystems, OI devices, and commands.
@@ -128,15 +119,28 @@ public class RobotContainer {
    * joysticks}.
    */
   private void configureBindings() {
+    // Extender
     new JoystickButton(JOYSTICK1, LEFT).whileTrue(extendP1);
-    new JoystickButton(JOYSTICK1, DOWN).whileTrue(extendP2);
+    new JoystickButton(JOYSTICK1, DOWN).whileTrue(extendP4);
     new JoystickButton(JOYSTICK1, RIGHT).whileTrue(extendP3);
-    new JoystickButton(JOYSTICK1, UP).whileTrue(extendP4);
-    new JoystickButton(JOYSTICK1, 5).whileTrue(extendV1);
-    new JoystickButton(JOYSTICK1, 6).whileTrue(extendV2);
+    new JoystickButton(JOYSTICK1, UP).whileTrue(extendP2);
+    new JoystickButton(JOYSTICK1, L1).whileTrue(extendV1);
+    new JoystickButton(JOYSTICK1, R1).whileTrue(extendV2);
 
+    // Grabber
     GrabButton.whileTrue(Grab);
     ReleaseButton.whileTrue(Release);
+
+    // Vision semi-auto
+    //driveToScoreButton.whileTrue(driveToScore);
+    //driveToSubstationButton.whileTrue(driveToSubstation);
+
+    // Crash button
+    new JoystickButton(JOYSTICK0, 7).and(new JoystickButton(JOYSTICK0, 8)).onTrue(m_Crash);
+    new JoystickButton(JOYSTICK1, 9).and(new JoystickButton(JOYSTICK1, 10)).onTrue(m_Crash);
+
+    // Gyro reset
+    new JoystickButton(JOYSTICK0, 8).onTrue(ResetGyro);
   }
 
   /**
@@ -146,13 +150,5 @@ public class RobotContainer {
    */
   public Command getAutonomousCommand() {
     return null;
-
-    // new PIDCommand(
-    // new PIDController(0.1,0,0),
-    // m_Drivebase.test::getSelectedSensorVelocity,
-    // 4,
-    // m_Drivebase::rotate,
-    // m_Drivebase
-    // );
   }
 }
