@@ -14,10 +14,10 @@ public class NavX extends SubsystemBase {
   private AHRS gyro = new AHRS();
   public NavX() {}
 
-  /** Angle is not continuous from -180 to 180 degree */
+  /** Angle is not continuous from 0 to 360 degree */
   public double getYaw()
   {
-    return gyro.getYaw();
+    return gyro.getYaw() + 180;
   }
 
   /** Get pitch */
@@ -35,7 +35,7 @@ public class NavX extends SubsystemBase {
   /** Return Rotation2d object, angle is continuous */
   public Rotation2d getRotation2d()
   {
-    return gyro.getRotation2d();
+    return gyro.getRotation2d().plus(Rotation2d.fromDegrees(180));
   }
 
   /** Reset gyro */

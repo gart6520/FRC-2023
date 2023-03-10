@@ -26,7 +26,7 @@ public class DriveJoystick extends CommandBase {
   @Override
   public void execute() {
     double ySpeed = -JOYSTICK0.getRawAxis(YAXISLEFT); // Y joystick is inverted
-    double xSpeed = -JOYSTICK0.getRawAxis(XAXISLEFT); // X drive is inverted
+    double xSpeed = JOYSTICK0.getRawAxis(XAXISLEFT); // X drive is inverted
     double rSpeed = JOYSTICK0.getRawAxis(XAXISRIGHT);
 
     SmartDashboard.putNumber("xSpeed", xSpeed * xSpeed);
@@ -38,6 +38,7 @@ public class DriveJoystick extends CommandBase {
     if (JOYSTICK0.getRawAxis(SLOW) > 0.2) co = 0.4;
 
     m_Drivebase.driveWithField(ySpeed * co, xSpeed * co, rSpeed * co, m_Gyro.getRotation2d().unaryMinus()); // X and Y is swapped in Controller vs Robot axis
+    //m_Drivebase.drive(ySpeed * co, xSpeed * co, rSpeed * co);
   }
 
   // Called once the command ends or is interrupted.

@@ -9,6 +9,8 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import frc.robot.commands.DriveJoystick;
+import frc.robot.commands.TurretControl;
+
 import static frc.robot.Constants.SubsystemInstance.*;
 
 /**
@@ -23,6 +25,7 @@ public class Robot extends TimedRobot {
 
   // Commands
   private DriveJoystick m_DriveJoystick = new DriveJoystick();
+  private TurretControl m_TurretControl = new TurretControl();
 
   /**
    * This function is run when the robot is first started up and should be used for any
@@ -96,6 +99,7 @@ public class Robot extends TimedRobot {
 
     // Run commands repeatedly until teleop mode disabled
     m_DriveJoystick.execute();
+    m_TurretControl.execute();
   }
 
   @Override

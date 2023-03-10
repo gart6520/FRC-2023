@@ -9,13 +9,11 @@ import edu.wpi.first.wpilibj2.command.StartEndCommand;
 import edu.wpi.first.wpilibj2.command.button.CommandXboxController;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
 import edu.wpi.first.wpilibj2.command.button.Trigger;
-import edu.wpi.first.math.geometry.Rotation2d;
 import frc.robot.commands.Crash;
-//import frc.robot.commands.GotoLocation;
+import frc.robot.commands.Auto;
 
 import static frc.robot.Constants.SubsystemInstance.*;
 import static frc.robot.Constants.Controller.*;
-import static frc.robot.Constants.VisionConfigs.*;
 
 /**
  * This class is where the bulk of the robot should be declared. Since
@@ -27,36 +25,37 @@ import static frc.robot.Constants.VisionConfigs.*;
  * subsystems, commands, and trigger mappings) should be declared here.
  */
 public class RobotContainer {
-  // Buttons
-  private final JoystickButton driveToScoreButton = new JoystickButton(JOYSTICK0, DRIVE_TO_SCORE);
-  private final JoystickButton driveToSubstationButton = new JoystickButton(JOYSTICK0, DRIVE_TO_SUBSTATION);
-
   private final JoystickButton GrabButton = new JoystickButton(JOYSTICK0, GrabB);
   private final JoystickButton ReleaseButton = new JoystickButton(JOYSTICK0, RealeaseB);
-  
+
   // Commands
   private final Crash m_Crash = new Crash();
-  //private final GotoAprilTag driveToScore = new GotoAprilTag(-1); // Choose best apriltag
-  //private final GotoLocation driveToScore = new GotoLocation(doubleSubstationLocation1, Rotation2d.fromDegrees(180));
-  //private final GotoLocation driveToSubstation = new GotoLocation(doubleSubstationLocation1, Rotation2d.fromDegrees(180));
+  // private final GotoAprilTag driveToScore = new GotoAprilTag(-1); // Choose
+  // best apriltag
+  // private final GotoLocation driveToScore = new
+  // GotoLocation(doubleSubstationLocation1, Rotation2d.fromDegrees(180));
+  // private final GotoLocation driveToSubstation = new
+  // GotoLocation(doubleSubstationLocation1, Rotation2d.fromDegrees(180));
+
+  private final Command AutoC = new Auto();
 
   private Command extendP1 = new StartEndCommand(() -> {
     m_Extender.extendP(-2000);
   }, () -> {
-    ;}
-  , m_Extender);
+    ;
+  }, m_Extender);
 
   private Command extendP2 = new StartEndCommand(() -> {
     m_Extender.extendP(-20000);
   }, () -> {
-    //m_Extender.extendV(-0);
+    // m_Extender.extendV(-0);
     ;
   }, m_Extender);
 
   private Command extendP3 = new StartEndCommand(() -> {
     m_Extender.extendP(-50000);
   }, () -> {
-    //m_Extender.extendV(0);
+    // m_Extender.extendV(0);
     ;
   }, m_Extender);
 
@@ -132,8 +131,8 @@ public class RobotContainer {
     ReleaseButton.whileTrue(Release);
 
     // Vision semi-auto
-    //driveToScoreButton.whileTrue(driveToScore);
-    //driveToSubstationButton.whileTrue(driveToSubstation);
+    // driveToScoreButton.whileTrue(driveToScore);
+    // driveToSubstationButton.whileTrue(driveToSubstation);
 
     // Crash button
     new JoystickButton(JOYSTICK0, 7).and(new JoystickButton(JOYSTICK0, 8)).onTrue(m_Crash);
@@ -149,6 +148,6 @@ public class RobotContainer {
    * @return the command to run in autonomous
    */
   public Command getAutonomousCommand() {
-    return null;
+    return AutoC;
   }
 }

@@ -59,7 +59,7 @@ public final class Constants {
   }
 
   /** CAN devices ID */
-  public static class CAN_ID {
+  public static class CAN_ID {        
     /** Left Front Motor */
     public static final int LEFT_FRONT = 1;
     /** Left Back Motor */
